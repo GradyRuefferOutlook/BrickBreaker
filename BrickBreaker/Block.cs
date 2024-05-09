@@ -13,14 +13,14 @@ namespace BrickBreaker
         public int height = 25;
 
         public int x;
-        public int y; 
+        public int y;
         public int hp;
         public Color colour;
 
         public static Random rand = new Random();
 
         public List<Modifier> modifiers = new List<Modifier>();
-        
+
 
         const int TICSPEED = 50;
         int fireTic;
@@ -38,6 +38,14 @@ namespace BrickBreaker
         {
             foreach (Modifier modifier in ball.modifiers)
             {
+                if (modifier.mod.Contains("IMMINENT"))
+                {
+                    GameScreen.holes.Add(new BlackHole(ball.x, ball.y, 0.5, 200, true, true, true, true, true));
+                    ball.modifiers.Clear();
+                    ball.modifiers.Add(new Modifier("PERM"));
+                    return (ball);
+                }
+
                 if (modifier.mod.Contains("fire"))
                 {
                     modifiers.Add(new Modifier("ONFIRE", modifier.effCount));
@@ -49,7 +57,7 @@ namespace BrickBreaker
 
                     List<Modifier> hold = new List<Modifier>();
 
-                    foreach(Modifier mod in ball.modifiers)
+                    foreach (Modifier mod in ball.modifiers)
                     {
                         hold.Add(mod);
                     }
@@ -65,7 +73,7 @@ namespace BrickBreaker
         {
             foreach (Modifier modifier in modifiers)
             {
-                if (modifier.mod ==("ONFIRE"))
+                if (modifier.mod == ("ONFIRE"))
                 {
                     fireTic--;
                 }

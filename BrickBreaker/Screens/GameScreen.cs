@@ -14,6 +14,7 @@ using System.Windows.Forms;
 using System.Media;
 using System.Drawing.Drawing2D;
 using System.Security.Cryptography.X509Certificates;
+using System.IO;
 
 namespace BrickBreaker
 {
@@ -54,7 +55,7 @@ namespace BrickBreaker
         //Grady Stuff
         public static int speedModBX = 0, speedModBY = 0, speedModPX = 0, widthModP;
 
-        public List<BlackHole> holes = new List<BlackHole>();
+        public static List<BlackHole> holes = new List<BlackHole>();
 
         List<Powerup> powerups = new List<Powerup>();
         List<Ball> balls = new List<Ball>();
@@ -275,6 +276,9 @@ namespace BrickBreaker
                 case Keys.G:
                     powerups.Add(new Powerup("BB4", new List<Modifier> { new Modifier("fire", 500) }));
                     break;
+                case Keys.H:
+                    powerups.Add(new Powerup("BH"));
+                    break;
                 case Keys.Right:
                     rightArrowDown = true;
                     break;
@@ -362,12 +366,6 @@ namespace BrickBreaker
                             blocksDestroyed += 1;
                         }
 
-                        if (blocks.Count == 0)
-                        {
-                            gameTimer.Enabled = false;
-                            OnStart(); // Restart game
-                            return;
-                        }
                     }
 
                     if (j >= 0)

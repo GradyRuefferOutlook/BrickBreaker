@@ -4,11 +4,17 @@ using System.Data.OleDb;
 using System.Drawing;
 using System.Windows.Forms;
 
+using System;
+using System.Collections.Generic;
+using System.Data.OleDb;
+using System.Drawing;
+using System.Windows.Forms;
+
 namespace BrickBreaker
 {
     public class Ball
     {
-        public int x, y, xSpeed, ySpeed, size, defaultSpeedX, defaultSpeedY;
+        public int x, y, xSpeed, ySpeed, size, defaultSpeedX, defaultSpeedY, defaultSize;
         public int lineSpeed = 25;
         public int throwX = 0;
         public Color colour;
@@ -27,7 +33,7 @@ namespace BrickBreaker
             defaultSpeedX = Math.Abs(_xSpeed);
             defaultSpeedY = Math.Abs(_ySpeed);
 
-
+            defaultSize = size;
 
             size = _ballSize;
 
@@ -96,18 +102,18 @@ namespace BrickBreaker
 
             if (CheckFor("fade"))
             {
-                foreach(Modifier m in modifiers)
+                foreach (Modifier m in modifiers)
                 {
                     if (m.mod == "fade")
                     {
-                        ballRec = new Rectangle(x + ((size / 2) - ((size / (m.effCount+ 1))/2)), y + ((size / 2) - ((size / (m.effCount + 1)) / 2)), size / (m.effCount + 1), size / (m.effCount + 1));
+                        ballRec = new Rectangle(x + ((size / 2) - ((size / (m.effCount + 1)) / 2)), y + ((size / 2) - ((size / (m.effCount + 1)) / 2)), size / (m.effCount + 1), size / (m.effCount + 1));
                     }
                 }
             }
 
             if (ballRec.IntersectsWith(blockRec) && shouldMove)
             {
-                
+
 
                 b.hp -= 1;
 
@@ -118,7 +124,7 @@ namespace BrickBreaker
 
                 }
 
-                else if (x > b.x + b.width  - 10 && xSpeed < 0)
+                else if (x > b.x + b.width - 10 && xSpeed < 0)
                 {
                     x = b.x + b.width + 2;
                     xSpeed *= -1;
@@ -253,7 +259,7 @@ namespace BrickBreaker
             if (y >= UC.Height)
             {
                 didCollide = true;
-              
+
             }
 
             return didCollide;
@@ -276,7 +282,7 @@ namespace BrickBreaker
             List<Modifier> hold = new List<Modifier>();
             foreach (Modifier m in modifiers)
             {
-                if(m.effCount != -55555)
+                if (m.effCount != -55555)
                 {
                     m.effCount--;
                     if (m.effCount >= 0)
